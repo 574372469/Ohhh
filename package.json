@@ -1,0 +1,29 @@
+{
+  "name": "hybrid-oss",
+  "version": "1.0.0",
+  "description": "Adapt to multi-platform oss",
+  "main": "webpack.config.js",
+  "author": "ruiming",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "test": "jest",
+    "precommit": "lint-staged",
+    "prettier": "prettier src/**/*.ts --write && git status",
+    "build:lib": "tsc -p tsconfig.json",
+    "prepublish:npm": "npm run build",
+    "publish:npm": "npm publish --access public"
+  },
+  "devDependencies": {
+    "jest": "^27.3.1",
+    "lint-staged": "^11.2.4",
+    "prettier": "2.4.1",
+    "typescript": "^4.4.4"
+  },
+  "lint-staged": {
+    "*.ts": [
+      "prettier --write",
+      "git add"
+    ]
+  }
+}

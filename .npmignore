@@ -1,0 +1,10 @@
+# source
+src
+/index.ts
+package-lock.json
+tslint.json
+.prettierrc
+
+
+# misc
+.DS_Store
