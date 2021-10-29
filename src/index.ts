@@ -1,1 +1,3 @@
-export { adapter } from './adapter/adapter';
+export { Ohhh } from "./Ohhh/Ohhh";
+export { newQiniu } from "./platform/qiniu";
+
