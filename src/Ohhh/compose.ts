@@ -11,17 +11,16 @@ import { ContentInterface, Next, Adapter, Adapters } from "./Ohhh.interface"
  */
 
 export function compose(middleware: Adapters) {
-    if (!Array.isArray(middleware)) throw new TypeError('Middleware stack must be an array!')
-    for (const fn of middleware) {
-        if (typeof fn !== 'function') throw new TypeError('Middleware must be composed of functions!')
-    }
+    // if (!Array.isArray(middleware)) throw new TypeError('Middleware stack must be an array!')
+    // for (const fn of middleware) {
+    //     if (typeof fn !== 'function') throw new TypeError('Middleware must be composed of functions!')
+    // }
 
     /**
      * @param {Object} context
      * @return {Promise}
      * @api public
      */
-
     return function (args: any[], context: ContentInterface, next?: Next) {
         // last called middleware #
         let index = -1

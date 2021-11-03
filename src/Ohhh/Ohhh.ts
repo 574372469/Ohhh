@@ -8,49 +8,18 @@ export class Content implements ContentInterface {
     }
 }
 
-// const _adaptersMap_ = {
-//     'buckets': [],
-//     'mkbucket': [],
-//     'domainList': [],
-//     'drop': [],
-
-//     'putbucketTagging': [],
-//     'getbucketTagging': [],
-//     'deletebucketTagging': [],
-
-//     'upload': [],
-//     'mkblk': [],
-//     'bput': [],
-//     'mkfile': [],
-//     'stat': [],
-//     'chgm': [],
-//     'move': [],
-//     'copy': [],
-//     'delete': [],
-//     'list': [],
-//     'fetch': [],
-//     'batch': [],
-//     'prefetch': [],
-//     'image': [],
-
-//     'deleteAfterDays': [],
-//     'chtype': [],
-//     'restoreAr': [],
-// }
-
-
-
-
 export class Ohhh extends Content implements OhhhInterface {
-    adaptersMap={}
+    adaptersMap = {}
 
     constructor(config, init?: (ContentInterface) => void) {
         super(config)
         if (init) init(this)
     }
 
-    // 适配器绑定 方法
+    // 绑定适配器
     useAdapter(adapter: Adapter, name: string): Ohhh {
+        if (typeof adapter !== 'function') throw new TypeError('Adapter must be composed of functions!')
+
         if (this.adaptersMap[name]) {
             this.adaptersMap[name].push(adapter)
         } else {
@@ -60,21 +29,26 @@ export class Ohhh extends Content implements OhhhInterface {
         return this
     }
 
-    // 适配器绑定全部方法
+    // 绑定全部适配器
     bindAdaptersMap(adaptersMap: AdaptersMap) {
+        Object.keys(adaptersMap).forEach((key)=>{
+            if (!Array.isArray(adaptersMap[key])) throw new TypeError('Middleware stack must be an array!')
+            for (const fn of adaptersMap[key]) {
+                if (typeof fn !== 'function') throw new TypeError('Middleware must be composed of functions!')
+            }
+        })
+       
+
         Object.assign(this.adaptersMap, adaptersMap)
         return this
     }
 
-    // oss执行动作
-    action(name: string) {
+    // 执行动作
+    action(name: string): Promise<any> {
         if (this.adaptersMap[name]) {
             return compose(this.adaptersMap[name])([...arguments], this)
         } else {
-            throw 'Error: undefined action'
+            return Promise.reject(new Error('unknown action'))
         }
     }
-
-
-
 }

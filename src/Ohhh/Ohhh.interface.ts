@@ -8,9 +8,7 @@ export interface ContentInterface {
 export type Next = () => Promise<any> | any
 export type Adapter = (playload: any[], content: ContentInterface, next?: Next) => void
 export type Adapters = Adapter[]
-export type AdaptersMap = {
-}
-
+export type AdaptersMap = { upload?: Adapter[], download?: Adapter[] }
 export type option_qiniu_upload = {
 
 }
